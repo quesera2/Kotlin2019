@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="sera.sera.que.kotlin201x">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="false"
