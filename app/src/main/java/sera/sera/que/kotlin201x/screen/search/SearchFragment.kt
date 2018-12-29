@@ -39,8 +39,7 @@ class SearchFragment : Fragment() {
 
         viewModel.searchResult
             .observe(this, Observer {
-                searchResultAdapter.dataSet = it ?: return@Observer
-                searchResultAdapter.notifyDataSetChanged()
+                searchResultAdapter.updateData(it)
             })
     }
 }
