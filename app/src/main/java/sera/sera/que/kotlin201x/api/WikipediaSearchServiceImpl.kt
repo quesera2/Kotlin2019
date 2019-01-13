@@ -25,19 +25,17 @@ object WikipediaSearchServiceImpl : WikipediaSearchService {
     }
 
     override suspend fun search(query: String): WikipediaPageResponse {
-        return client.use {
-            it.get {
-                accept(ContentType.Application.Json)
-                url {
-                    protocol = URLProtocol.HTTPS
-                    host = "ja.wikipedia.org"
-                    path("w", "api.php")
-                    parameters.apply {
-                        append("format", "json")
-                        append("action", "query")
-                        append("list", "search")
-                        append("srsearch", query)
-                    }
+        return client.get {
+            accept(ContentType.Application.Json)
+            url {
+                protocol = URLProtocol.HTTPS
+                host = "ja.wikipedia.org"
+                path("w", "api.php")
+                parameters.apply {
+                    append("format", "json")
+                    append("action", "query")
+                    append("list", "search")
+                    append("srsearch", query)
                 }
             }
         }
