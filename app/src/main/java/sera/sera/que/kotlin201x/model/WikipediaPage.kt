@@ -1,23 +1,23 @@
 package sera.sera.que.kotlin201x.model
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 data class WikipediaPageResponse(
     val batchcomplete: String,
-    @Json(name = "continue")
+    @SerialName("continue")
     val continueData: Continue,
     val query: Query
 )
 
-@JsonClass(generateAdapter = true)
+@Serializable
 data class Query(
     val searchinfo: Searchinfo,
     val search: List<WikipediaPage>
 )
 
-@JsonClass(generateAdapter = true)
+@Serializable
 data class WikipediaPage(
     val ns: Long,
     val title: String,
@@ -28,14 +28,14 @@ data class WikipediaPage(
     val timestamp: String
 )
 
-@JsonClass(generateAdapter = true)
+@Serializable
 data class Searchinfo(
     val totalhits: Long
 )
 
-@JsonClass(generateAdapter = true)
+@Serializable
 data class Continue(
     val sroffset: Long,
-    @Json(name = "continue")
+    @SerialName("continue")
     val continueData: String
 )

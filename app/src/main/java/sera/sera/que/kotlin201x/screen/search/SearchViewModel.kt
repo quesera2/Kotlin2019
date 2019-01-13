@@ -10,7 +10,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import ru.gildor.coroutines.retrofit.await
 import sera.sera.que.kotlin201x.api.WikipediaSearchService
 import sera.sera.que.kotlin201x.model.WikipediaPage
 
@@ -37,7 +36,7 @@ class SearchViewModel(
         launch {
             try {
                 val query = searchQuery.value ?: return@launch
-                val results = searchService.search(query).await()
+                val results = searchService.search(query)
                 Log.d("SearchViewModel", results.query.search.toString())
                 _searchResult.postValue(results.query.search)
 //                findNavController(view).navigate(R.id.action_searchFragment_to_detailFragment)
