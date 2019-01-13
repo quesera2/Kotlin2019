@@ -1,6 +1,5 @@
 package sera.sera.que.kotlin201x.screen.search
 
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -37,12 +36,12 @@ class SearchViewModel(
             try {
                 val query = searchQuery.value ?: return@launch
                 val results = searchService.search(query)
-                Log.d("SearchViewModel", results.query.search.toString())
                 _searchResult.postValue(results.query.search)
 //                findNavController(view).navigate(R.id.action_searchFragment_to_detailFragment)
 
             } catch (t: Throwable) {
-                Log.e("SearchViewModel", "failure", t)
+                // TODO: Exception Handling
+                t.printStackTrace()
             }
         }
     }
