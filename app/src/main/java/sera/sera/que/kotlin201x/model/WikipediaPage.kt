@@ -1,5 +1,7 @@
 package sera.sera.que.kotlin201x.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -17,6 +19,7 @@ data class Query(
     val search: List<WikipediaPage>
 )
 
+@Parcelize
 @Serializable
 data class WikipediaPage(
     val ns: Long,
@@ -26,7 +29,7 @@ data class WikipediaPage(
     val wordcount: Long,
     val snippet: String,
     val timestamp: String
-)
+) : Parcelable
 
 @Serializable
 data class Searchinfo(

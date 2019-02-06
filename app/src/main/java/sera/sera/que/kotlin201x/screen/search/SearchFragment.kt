@@ -29,7 +29,9 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val searchResultAdapter = SearchResultAdapter()
+        val searchResultAdapter = SearchResultAdapter().apply {
+            setOnItemClickListener { view, model -> viewModel.onItemClick(view, model) }
+        }
 
         binding.recyclerView.apply {
             setHasFixedSize(true)

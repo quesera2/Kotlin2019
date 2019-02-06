@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import androidx.navigation.Navigation.findNavController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -37,12 +38,15 @@ class SearchViewModel(
                 val query = searchQuery.value ?: return@launch
                 val results = searchService.search(query)
                 _searchResult.postValue(results.query.search)
-//                findNavController(view).navigate(R.id.action_searchFragment_to_detailFragment)
-
             } catch (t: Throwable) {
                 // TODO: Exception Handling
                 t.printStackTrace()
             }
         }
+    }
+
+    fun onItemClick(view: View, page: WikipediaPage) {
+        val direction = SearchFragmentDirections.actionSearchFragmentToDetailFragment(page)
+        findNavController(view).navigate(direction)
     }
 }
