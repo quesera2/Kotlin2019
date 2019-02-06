@@ -32,16 +32,14 @@ class SearchViewModel(
         job.cancel()
     }
 
-    fun onSearchClick(view: View) {
-        launch {
-            try {
-                val query = searchQuery.value ?: return@launch
-                val results = searchService.search(query)
-                _searchResult.postValue(results.query.search)
-            } catch (t: Throwable) {
-                // TODO: Exception Handling
-                t.printStackTrace()
-            }
+    fun onSearchClick() = launch {
+        try {
+            val query = searchQuery.value ?: return@launch
+            val results = searchService.search(query)
+            _searchResult.postValue(results.query.search)
+        } catch (t: Throwable) {
+            // TODO: Exception Handling
+            t.printStackTrace()
         }
     }
 

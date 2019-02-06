@@ -26,7 +26,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_input" />
+            app:layout_constraintTop_toBottomOf="@+id/text_input"
+            tools:listitem="@layout/listitem_search_result" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/appCompatButton"
@@ -34,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:enabled="@{safeUnbox(viewModel.canExecute)}"
-            android:onClick="@{viewModel::onSearchClick}"
+            android:onClick="@{v -> viewModel.onSearchClick()}"
             android:text="検索"
             app:layout_constraintBottom_toBottomOf="@+id/text_input"
             app:layout_constraintEnd_toEndOf="parent"
