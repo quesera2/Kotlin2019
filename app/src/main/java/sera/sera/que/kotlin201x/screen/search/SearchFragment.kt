@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
 import sera.sera.que.kotlin201x.databinding.SearchFragmentBinding
@@ -30,7 +31,7 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val searchResultAdapter = SearchResultAdapter().apply {
-            setOnItemClickListener { view, model -> viewModel.onItemClick(view, model) }
+            setOnItemClickListener { model -> viewModel.onItemClick(model) }
         }
 
         binding.recyclerView.apply {
@@ -42,6 +43,12 @@ class SearchFragment : Fragment() {
         viewModel.searchResult
             .observe(this, Observer {
                 searchResultAdapter.updateData(it)
+            })
+
+        viewModel.navigateTo
+            .observe(this, Observer {
+                // Event<T> にした方がいいと思われるがとりあえずは雑に
+                findNavController().navigate(it)
             })
     }
 }

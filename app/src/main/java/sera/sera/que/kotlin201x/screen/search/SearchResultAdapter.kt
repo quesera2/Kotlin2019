@@ -11,10 +11,6 @@ import sera.sera.que.kotlin201x.model.WikipediaPage
 
 class SearchResultAdapter : RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
 
-    interface OnItemClickListener {
-        fun onItemClick(view: View, item: WikipediaPage)
-    }
-
     class ViewHolder(val root: View) : RecyclerView.ViewHolder(root) {
         val title: TextView = root.findViewById(R.id.title)
         val snippet: TextView = root.findViewById(R.id.snippet)
@@ -22,16 +18,10 @@ class SearchResultAdapter : RecyclerView.Adapter<SearchResultAdapter.ViewHolder>
 
     private var dataSet: List<WikipediaPage> = emptyList()
 
-    private var listener: OnItemClickListener? = null
+    private var listener: ((item: WikipediaPage) -> Unit)? = null
 
-    fun setOnItemClickListener(listener: OnItemClickListener) {
-        this.listener = listener
-    }
-
-    fun setOnItemClickListener(handler: (view: View, item: WikipediaPage) -> Unit) {
-        this.setOnItemClickListener(object : OnItemClickListener {
-            override fun onItemClick(view: View, item: WikipediaPage) = handler(view, item)
-        })
+    fun setOnItemClickListener(handler: (item: WikipediaPage) -> Unit) {
+        listener = handler
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -43,7 +33,7 @@ class SearchResultAdapter : RecyclerView.Adapter<SearchResultAdapter.ViewHolder>
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.title.text = dataSet[position].title
         holder.snippet.text = dataSet[position].snippet
-        holder.root.setOnClickListener { listener?.onItemClick(it, dataSet[position]) }
+        holder.root.setOnClickListener { listener?.invoke(dataSet[position]) }
     }
 
     override fun getItemCount() = dataSet.size

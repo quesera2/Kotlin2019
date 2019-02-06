@@ -1,11 +1,10 @@
 package sera.sera.que.kotlin201x.screen.search
 
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import androidx.navigation.Navigation.findNavController
+import androidx.navigation.NavDirections
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -23,6 +22,9 @@ class SearchViewModel(
 
     private val _searchResult = MutableLiveData<List<WikipediaPage>>()
     val searchResult: LiveData<List<WikipediaPage>> get() = _searchResult
+
+    private val _navigateTo = MutableLiveData<NavDirections>()
+    val navigateTo: LiveData<NavDirections> get() = _navigateTo
 
     private val job = Job()
     override val coroutineContext = Dispatchers.Main + job
@@ -43,8 +45,8 @@ class SearchViewModel(
         }
     }
 
-    fun onItemClick(view: View, page: WikipediaPage) {
+    fun onItemClick(page: WikipediaPage) {
         val direction = SearchFragmentDirections.actionSearchFragmentToDetailFragment(page)
-        findNavController(view).navigate(direction)
+        _navigateTo.postValue(direction)
     }
 }
