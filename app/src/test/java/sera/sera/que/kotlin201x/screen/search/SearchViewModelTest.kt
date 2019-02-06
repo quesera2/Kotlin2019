@@ -63,9 +63,10 @@ class SearchViewModelTest {
             searchService.search("search")
         }
 
-        assertThat(searchResultCapture.captured).apply {
-            hasSize(2)
-        }
+        assertThat(searchResultCapture.captured).hasSize(2)
+        val firstItem = searchResultCapture.captured.first()
+        assertThat(firstItem.pageid).isEqualTo(1652941)
+        assertThat(firstItem.title).isEqualTo("深愛")
     }
 
     private val dummyJson = """
