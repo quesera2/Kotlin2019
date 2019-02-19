@@ -5,6 +5,6 @@
 - AAC LiveData
 - Data Binding
 - KOIN
-- Retrofit
+- Ktor
 
 この辺りを使う想定。
