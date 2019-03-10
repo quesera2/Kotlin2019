@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.setMain
-import kotlinx.serialization.json.JSON
+import kotlinx.serialization.json.Json
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -36,7 +36,7 @@ class SearchViewModelTest {
     fun setUp() {
         Dispatchers.setMain(Dispatchers.Unconfined)
 
-        val dummyResponse = JSON.parse(WikipediaPageResponse.serializer(), dummyJson)
+        val dummyResponse = Json.parse(WikipediaPageResponse.serializer(), dummyJson)
         searchService = mockk {
             coEvery { search(any()) } returns dummyResponse
         }
