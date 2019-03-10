@@ -2,8 +2,8 @@ package sera.sera.que.kotlin201x.screen.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import androidx.navigation.NavDirections
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -11,6 +11,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import sera.sera.que.kotlin201x.api.WikipediaSearchService
 import sera.sera.que.kotlin201x.model.WikipediaPage
+import sera.sera.que.kotlin201x.screen.search.SearchFragmentDirections.actionSearchFragmentToDetailFragment
 
 class SearchViewModel(
     private val searchService: WikipediaSearchService
@@ -18,7 +19,7 @@ class SearchViewModel(
 
     val searchQuery = MutableLiveData<String>()
 
-    val canExecute: LiveData<Boolean> = Transformations.map(searchQuery) { !it.isNullOrEmpty() }
+    val canExecute: LiveData<Boolean> = searchQuery.map { !it.isNullOrEmpty() }
 
     private val _searchResult = MutableLiveData<List<WikipediaPage>>()
     val searchResult: LiveData<List<WikipediaPage>> get() = _searchResult
@@ -35,18 +36,19 @@ class SearchViewModel(
     }
 
     fun onSearchClick() = launch {
-        try {
-            val query = searchQuery.value ?: return@launch
-            val results = searchService.search(query)
-            _searchResult.postValue(results.query.search)
-        } catch (t: Throwable) {
+        runCatching {
+            val query = searchQuery.value.orEmpty()
+            searchService.search(query)
+        }.onSuccess {
+            _searchResult.postValue(it.query.search)
+        }.onFailure {
             // TODO: Exception Handling
-            t.printStackTrace()
+            it.printStackTrace()
         }
     }
 
     fun onItemClick(page: WikipediaPage) {
-        val direction = SearchFragmentDirections.actionSearchFragmentToDetailFragment(page)
+        val direction = actionSearchFragmentToDetailFragment(page)
         _navigateTo.postValue(direction)
     }
 }
