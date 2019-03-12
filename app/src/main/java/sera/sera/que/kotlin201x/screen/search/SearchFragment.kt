@@ -47,8 +47,8 @@ class SearchFragment : Fragment() {
 
         viewModel.navigateTo
             .observe(this) {
-                // Event<T> にした方がいいと思われるがとりあえずは雑に
-                findNavController().navigate(it)
+                val destination = it.getContentIfNotHandled() ?: return@observe
+                findNavController().navigate(destination)
             }
     }
 }

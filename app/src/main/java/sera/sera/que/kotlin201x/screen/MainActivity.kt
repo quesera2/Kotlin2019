@@ -6,7 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.NavigationUI.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import org.koin.android.viewmodel.ext.android.viewModel
 import sera.sera.que.kotlin201x.R
@@ -35,6 +35,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+        return navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp()
     }
 }
