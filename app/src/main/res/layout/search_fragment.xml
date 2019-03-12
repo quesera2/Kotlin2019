@@ -20,20 +20,19 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/appCompatButton"
+            app:layout_constraintStart_toStartOf="@+id/text_input"
             app:layout_constraintTop_toBottomOf="@+id/text_input"
             tools:listitem="@layout/listitem_search_result" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/appCompatButton"
-            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+            style="@style/Widget.MaterialComponents.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:enabled="@{safeUnbox(viewModel.canExecute)}"
             android:onClick="@{v -> viewModel.onSearchClick()}"
             android:text="検索"
@@ -43,6 +42,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_input"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -59,6 +59,7 @@
                 android:id="@+id/search_query"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:singleLine="true"
                 android:text="@={viewModel.searchQuery}" />
