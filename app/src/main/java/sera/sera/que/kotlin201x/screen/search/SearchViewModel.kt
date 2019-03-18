@@ -11,6 +11,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import sera.sera.que.kotlin201x.api.WikipediaSearchService
 import sera.sera.que.kotlin201x.model.WikipediaPage
+import sera.sera.que.kotlin201x.screen.Event
 import sera.sera.que.kotlin201x.screen.search.SearchFragmentDirections.actionSearchFragmentToDetailFragment
 
 class SearchViewModel(
@@ -24,8 +25,8 @@ class SearchViewModel(
     private val _searchResult = MutableLiveData<List<WikipediaPage>>()
     val searchResult: LiveData<List<WikipediaPage>> get() = _searchResult
 
-    private val _navigateTo = MutableLiveData<NavDirections>()
-    val navigateTo: LiveData<NavDirections> get() = _navigateTo
+    private val _navigateTo = MutableLiveData<Event<NavDirections>>()
+    val navigateTo: LiveData<Event<NavDirections>> get() = _navigateTo
 
     private val job = Job()
     override val coroutineContext = Dispatchers.Main + job
@@ -47,8 +48,7 @@ class SearchViewModel(
         }
     }
 
-    fun onItemClick(page: WikipediaPage) {
-        val direction = actionSearchFragmentToDetailFragment(page)
-        _navigateTo.postValue(direction)
-    }
+    fun onItemClick(page: WikipediaPage) = actionSearchFragmentToDetailFragment(page)
+        .let(::Event)
+        .let(_navigateTo::postValue)
 }
