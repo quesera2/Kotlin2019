@@ -22,7 +22,7 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = SearchFragmentBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         return binding.root
     }
@@ -41,12 +41,12 @@ class SearchFragment : Fragment() {
         }
 
         viewModel.searchResult
-            .observe(this) {
+            .observe(viewLifecycleOwner) {
                 searchResultAdapter.updateData(it)
             }
 
         viewModel.navigateTo
-            .observe(this) {
+            .observe(viewLifecycleOwner) {
                 val destination = it.getContentIfNotHandled() ?: return@observe
                 findNavController().navigate(destination)
             }
